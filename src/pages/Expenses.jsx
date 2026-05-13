@@ -55,8 +55,9 @@ const Expenses = () => {
                         <thead className='table'>
                             <tr>
                                 <th scope='col'>No</th>
+                                <th className='text-end' scope='col'>Amount</th>
+                                <th scope='col'> </th>
                                 <th scope='col'>Description</th>
-                                <th scope='col'>Amount</th>
                                 <th scope='col'>Date and Time</th>
                             </tr>
                         </thead>
@@ -64,16 +65,18 @@ const Expenses = () => {
                             {expenseList.map((expense, index) => (
                                 <tr key={expense.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/expenses/update/${expense.id}`)}>
                                     <td>{index + 1}</td>
+                                    <td className='text-end'>{expense.amount}</td>
+                                    <td></td>
                                     <td>{expense.description}</td>
-                                    <td>{expense.amount}</td>
                                     <td>{new Date(expense.timestamp)
                                         .toLocaleString()}</td>
                                 </tr>
                             ))}
                             <tr>
                                 <td></td>
+                                <td className='text-end'>{total}</td>
+                                <td></td>
                                 <td className='fw-bold'>Total</td>
-                                <td>{total}</td>
                                 <td></td>
                             </tr>
                         </tbody>
