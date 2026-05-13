@@ -4,7 +4,7 @@ import api from '../api/Axios';
 import { useAuth } from '../utility/AuthContext';
 
 const Navbar = () => {
-    const { username } = useAuth()
+    const { username, setUsername } = useAuth()
     const navigate = useNavigate()
 
     const logout = async () => {
@@ -22,7 +22,7 @@ const Navbar = () => {
             <div className="container-fluid">
                 <nav className="navbar navbar-expand-lg navbar bg-body-secondary fixed-top">
                     <div className="container-fluid">
-                        <a className="navbar-brand">BillSplits</a>
+                        <a className="navbar-brand">Expense Tracker</a>
 
                         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                             <span className="navbar-toggler-icon"></span>
@@ -34,13 +34,7 @@ const Navbar = () => {
                                     <NavLink to="/" className="nav-link">Home</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to="/friends/" className="nav-link">Friends</NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink to="/transactions/" className="nav-link">Transactions</NavLink>
-                                </li>
-                                <li className="nav-item">
-                                    <NavLink to="/balances/" className="nav-link">Balances</NavLink>
+                                    <NavLink to="/expenses/" className="nav-link">Expenses</NavLink>
                                 </li>
                             </ul>
 
@@ -52,7 +46,7 @@ const Navbar = () => {
                                     <NavLink to="/profile/" className="nav-link"><i className="bi bi-person-circle"></i> {username}</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" onClick={logout}>
+                                    <a className="nav-link btn" onClick={logout}>
                                         <i className="bi bi-box-arrow-right"></i> Logout
                                     </a>
                                 </li>

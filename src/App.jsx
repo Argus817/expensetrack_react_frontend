@@ -3,13 +3,13 @@ import Login from "./pages/Login"
 import { useState } from "react"
 import Register from "./pages/Register"
 import Home from "./pages/Home"
-import Friends from "./pages/Friends"
-import Transactions from "./pages/Transactions"
-import Balances from "./pages/Balances"
 import Profile from "./pages/Profile"
 import { AuthProvider } from "./utility/AuthContext"
 import PrivateRoute from "./utility/PrivateRoute"
 import PublicRoute from "./utility/PublicRoute"
+import Expenses from "./pages/Expenses"
+import ExpenseAdd from "./pages/ExpenseAdd"
+import ExpenseUpdate from "./pages/ExpenseUpdate"
 
 
 function App() {
@@ -26,14 +26,14 @@ function App() {
                     <Route path="/" element={
                         <PrivateRoute><Home /></PrivateRoute>
                     } />
-                    <Route path="/friends/" element={
-                        <PrivateRoute><Friends /></PrivateRoute>
+                    <Route path="/expenses/" element={
+                        <PrivateRoute><Expenses /></PrivateRoute>
                     } />
-                    <Route path="/transactions/" element={
-                        <PrivateRoute><Transactions /></PrivateRoute>
+                    <Route path="/expenses/new/add/" element={
+                        <PrivateRoute><ExpenseAdd /></PrivateRoute>
                     } />
-                    <Route path="/balances/" element={
-                        <PrivateRoute><Balances /></PrivateRoute>
+                    <Route path="/expenses/update/:id" element={
+                        <PrivateRoute><ExpenseUpdate /></PrivateRoute>
                     } />
                     <Route path="/profile/" element={
                         <PrivateRoute><Profile /></PrivateRoute>

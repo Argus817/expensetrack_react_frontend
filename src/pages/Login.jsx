@@ -2,43 +2,61 @@ import { useState } from 'react'
 import LoginRegisterCommon from './LoginRegisterCommon'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../api/Axios'
+import { useAuth } from '../utility/AuthContext'
 
 const Login = () => {
-    const navigate = useNavigate();
+    const {setUsername} = useAuth()
+
+    const navigate = useNavigate() 
 
     const [form, setForm] = useState({
         username: "",
         password: ""
-    });
+    })
+
+    const [apiMessages, setApiMessages] = useState([])
 
     const handleChange = (e) => {
         setForm({
             ...form,
             [e.target.name]: e.target.value
-        });
-    };
+        })
+    }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         try {
-            const res = await api.post('/auth/token/', form)
+            const res = await api.post('/auth/token/', form, {_noInterceptor: true})
 
             localStorage.setItem("access_token", res.data.access)
             localStorage.setItem("username", res.data.username)
 
-            navigate("/")
+            setUsername(res.data.username)
+
+            navigate('/')
 
         } catch (err) {
             console.error(err)
-            alert("Invalid credentials")
+            setApiMessages([{ text: "Invalid Credentials", tags: "danger" }])
         }
-    };
+    }
+
+    const allMessages = [...apiMessages]
 
     return (
         <LoginRegisterCommon>
-            <h1>Billsplits</h1>
             <h1 className="h3 mb-3 font-weight-normal">Login</h1>
+
+            {/* Render all errors/success messages */}
+            {allMessages.map((msg, index) => (
+                <div
+                    key={index}
+                    className={`alert login-alerts alert-${msg.tags === 'error' ? 'danger' : msg.tags}`}
+                >
+                    {msg.text}
+                </div>
+            ))}
 
             <form className='mb-3' onSubmit={handleSubmit}>
                 <input

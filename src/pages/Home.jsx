@@ -1,28 +1,21 @@
-import { useState } from 'react'
 import Navbar from '../components/Navbar'
-import api from '../api/Axios'
+
+import { useAuth } from '../utility/AuthContext'
 
 const Home = () => {
-    const [ msg, setMsg ] = useState('')
-    
-    const getMessage = async () => {
-        try {
-            const res = await api.get('/api/hello/')
-            if (res.status === 200) {
-                console.log(res.data)
-                setMsg(res.data.message)
-            }
-        }
-        catch (e) {
-            console.log(e)
-        }
-    }
+    const { username } = useAuth()
 
     return (
         <div>
             <Navbar />
-            <button onClick={getMessage}>Click me</button>
-            <a>{msg}</a>
+            <div className="container my-4">
+                <div className="jumbotron bg-body-secondary p-4 rounded">
+                    <h1 className="display-4">Welcome {username}</h1>
+                    <p className="lead">Manage your bills effortlessly with Expense Tracker.</p>
+
+                </div>
+            </div>
+
         </div>
     )
 }

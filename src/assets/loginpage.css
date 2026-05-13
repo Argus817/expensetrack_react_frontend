@@ -1,9 +1,9 @@
 html,
-body {
+.special-body-style {
     height: 100%;
 }
 
-body {
+.special-body-style {
     display: -ms-flexbox;
     display: -webkit-box;
     display: flex;
@@ -20,4 +20,8 @@ body {
 .login-form-inputs {
     max-width: 250px;
     margin: 0 auto;
+}
+
+.login-alerts {
+    max-width: 250px;
 }
