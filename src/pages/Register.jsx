@@ -3,6 +3,7 @@ import LoginRegisterCommon from './LoginRegisterCommon'
 import { Link } from 'react-router-dom'
 import api from '../api/Axios'
 import AlertMessages from '../components/AlertMessages'
+import { useAuth } from '../utility/AuthContext'
 
 const Register = () => {
     const [form, setForm] = useState({
@@ -12,6 +13,8 @@ const Register = () => {
     })
 
     const [apiMessages, setApiMessages] = useState([])
+
+    const {setIsLoading} = useAuth()
 
     const handleChange = (e) => {
         setForm({
@@ -23,7 +26,7 @@ const Register = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-
+        setIsLoading(true)
         try {
             const res = await api.post('/auth/token/register/',
                 { username: form['username'], password: form['password'] }
@@ -49,6 +52,8 @@ const Register = () => {
             }
 
             setApiMessages(mess)
+        } finally {
+            setIsLoading(false)
         }
         setForm({
             username: "",

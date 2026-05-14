@@ -5,7 +5,7 @@ import api from '../api/Axios'
 import { useAuth } from '../utility/AuthContext'
 
 const Login = () => {
-    const {setUsername} = useAuth()
+    const { setUsername, setIsLoading } = useAuth()
 
     const navigate = useNavigate() 
 
@@ -25,6 +25,7 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setIsLoading(true)
 
         try {
             const res = await api.post('/auth/token/', form, {_noInterceptor: true})
@@ -39,6 +40,8 @@ const Login = () => {
         } catch (err) {
             console.error(err)
             setApiMessages([{ text: "Invalid Credentials", tags: "danger" }])
+        } finally {
+            setIsLoading(false)
         }
     }
 

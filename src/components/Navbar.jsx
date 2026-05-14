@@ -2,18 +2,21 @@ import ThemeButton from './ThemeButton'
 import { NavLink, useNavigate } from 'react-router-dom'
 import api from '../api/Axios';
 import { useAuth } from '../utility/AuthContext';
+import { useState } from 'react';
 
 const Navbar = () => {
-    const { username, setUsername } = useAuth()
+    const { username, setUsername, setIsLoading } = useAuth()
     const navigate = useNavigate()
 
     const logout = async () => {
+        setIsLoading(true)
         const res = await api.post('/auth/token/logout/', {}, { withCredentials: true } )
 
         localStorage.removeItem('access_token')
         localStorage.removeItem('username')
         setUsername(null)
 
+        setIsLoading(false)
         navigate('/login')
     }
 
@@ -47,7 +50,7 @@ const Navbar = () => {
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link btn" onClick={logout}>
-                                        <i className="bi bi-box-arrow-right"></i> Logout
+                                        <i className="bi bi-box-arrow-right"></i> Logout 
                                     </a>
                                 </li>
                             </ul>

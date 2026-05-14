@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import AlertMessages from '../components/AlertMessages'
 import api from '../api/Axios'
+import { useAuth } from '../utility/AuthContext'
 
 const ExpenseAdd = () => {
     const navigate = useNavigate()
@@ -14,6 +15,8 @@ const ExpenseAdd = () => {
         description: '',
         amount: '',
     })
+
+    const {setIsLoading} = useAuth()
 
     const handleChange = (e) => {
         let value = e.target.value;
@@ -40,6 +43,7 @@ const ExpenseAdd = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setIsLoading(true)
 
         try {
 
@@ -58,7 +62,7 @@ const ExpenseAdd = () => {
             setMessages([
                 { text: 'Failed to add expense', tags: 'danger' }
             ])
-        }
+        } 
     }
 
     return (

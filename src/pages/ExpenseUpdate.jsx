@@ -4,10 +4,12 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import AlertMessages from '../components/AlertMessages'
 import api from '../api/Axios'
+import { useAuth } from '../utility/AuthContext'
 
 const ExpenseUpdate = () => {
 
     const { id } = useParams()
+    const { setIsLoading } = useAuth()
 
     const navigate = useNavigate()
 
@@ -19,6 +21,7 @@ const ExpenseUpdate = () => {
     })
 
     const getExpense = async () => {
+        setIsLoading(true)
 
         try {
 
@@ -36,6 +39,8 @@ const ExpenseUpdate = () => {
             setMessages([
                 { text: 'Failed to load expense', tags: 'danger' }
             ])
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -69,6 +74,7 @@ const ExpenseUpdate = () => {
     const handleSubmit = async (e) => {
 
         e.preventDefault()
+        setIsLoading(true)
 
         try {
 
@@ -88,10 +94,11 @@ const ExpenseUpdate = () => {
             setMessages([
                 { text: 'Update failed', tags: 'danger' }
             ])
-        }
+        } 
     }
 
     const handleDelete = async () => {
+        setIsLoading(true)
         try {
             await api.delete(`/api/expense/update/${id}/`)
             navigate('/expenses')
@@ -102,7 +109,7 @@ const ExpenseUpdate = () => {
             setMessages([
                 { text: 'Delete failed', tags: 'danger' }
             ])
-        }
+        } 
     }
 
     return (

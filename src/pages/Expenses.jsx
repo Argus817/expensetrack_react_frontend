@@ -4,6 +4,8 @@ import AlertMessages from '../components/AlertMessages';
 
 import api from '../api/Axios';
 import { useNavigate } from 'react-router-dom';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { useAuth } from '../utility/AuthContext';
 
 const Expenses = () => {
 
@@ -12,8 +14,11 @@ const Expenses = () => {
     const [messages, setMessages] = useState([])
     const [expenseList, setExpenseList] = useState([])
     const [total, setTotal] = useState(0.00)
+    
+    const { setIsLoading } = useAuth()
 
     const getExpenseData = async () => {
+        setIsLoading(true)
         try {
             const res = await api.get('/api/expense/')
             setExpenseList(res.data)
@@ -28,6 +33,8 @@ const Expenses = () => {
         } catch (err) {
             console.error(err)
             setMessages([{ text: "Api error", tags: "danger" }])
+        } finally {
+            setIsLoading(false)
         }
     }
 
@@ -62,6 +69,7 @@ const Expenses = () => {
                             </tr>
                         </thead>
                         <tbody>
+                            
                             {expenseList.map((expense, index) => (
                                 <tr key={expense.id} style={{ cursor: 'pointer' }} onClick={() => navigate(`/expenses/update/${expense.id}`)}>
                                     <td>{index + 1}</td>
