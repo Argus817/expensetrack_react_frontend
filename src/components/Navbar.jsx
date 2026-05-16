@@ -1,5 +1,5 @@
 import ThemeButton from './ThemeButton'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import api from '../api/Axios';
 import { useAuth } from '../utility/AuthContext';
 import { useState } from 'react';
@@ -7,6 +7,7 @@ import { useState } from 'react';
 const Navbar = () => {
     const { username, setUsername, setIsLoading } = useAuth()
     const navigate = useNavigate()
+    const location = useLocation()
 
     const logout = async () => {
         setIsLoading(true)
@@ -18,6 +19,13 @@ const Navbar = () => {
 
         setIsLoading(false)
         navigate('/login')
+    }
+
+    const isActive = (path, exact = false) => {
+        if (exact) {
+            return location.pathname === path
+        }
+        return location.pathname.startsWith(path)
     }
 
     return (
@@ -34,10 +42,10 @@ const Navbar = () => {
                         <div className="collapse navbar-collapse" id="navbarNav">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <NavLink to="/" className="nav-link">Home</NavLink>
+                                    <NavLink to="/" className={isActive('/', true)? 'nav-link active' : 'nav-link'}>Home</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to="/expenses/" className="nav-link">Expenses</NavLink>
+                                    <NavLink to="/expenses" className={isActive('/expenses')? 'nav-link active' : 'nav-link'}>Expenses</NavLink>
                                 </li>
                             </ul>
 
@@ -46,7 +54,7 @@ const Navbar = () => {
                                     <a className="nav-link"><ThemeButton /></a>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to="/profile/" className="nav-link"><i className="bi bi-person-circle"></i> {username}</NavLink>
+                                    <NavLink to="/profile" className="nav-link"><i className="bi bi-person-circle"></i> {username}</NavLink>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link btn" onClick={logout}>

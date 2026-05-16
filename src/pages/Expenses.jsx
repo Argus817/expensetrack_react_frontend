@@ -42,6 +42,12 @@ const Expenses = () => {
         getExpenseData()
     }, [])
 
+    const getDate = (timestamp) => {
+        const date_obj = new Date(timestamp)
+        const display = `${date_obj.getDate()}/${date_obj.getMonth()+1}/${date_obj.getFullYear()} ${date_obj.toLocaleTimeString()} ${timestamp} | ${date_obj.toISOString()}`
+        return display
+    }
+
     return (
         <div>
             <Navbar />
@@ -76,8 +82,7 @@ const Expenses = () => {
                                     <td className='text-end'>{expense.amount}</td>
                                     <td></td>
                                     <td>{expense.description}</td>
-                                    <td>{new Date(expense.timestamp)
-                                        .toLocaleString()}</td>
+                                    <td>{getDate(expense.timestamp)}</td>
                                 </tr>
                             ))}
                             <tr>

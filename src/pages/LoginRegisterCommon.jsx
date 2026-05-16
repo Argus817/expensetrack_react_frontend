@@ -11,7 +11,7 @@ const LoginRegisterCommon = ({ children }) => {
 
     return (
         <div className="text-center">
-            <h1>Billsplits</h1>
+            <h1>Expense Tracker</h1>
             {children}
             <br></br>
             <h4>
